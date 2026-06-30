@@ -276,6 +276,40 @@
   .fb-info{grid-template-columns:1fr;text-align:center;gap:12px;padding:26px 22px}
 }
 
+
+  /* ===== Afinado para celular (más dinámico, menos lista) ===== */
+  @media(max-width:600px){
+    .section,.contacto{padding:50px 0}
+    .wrap{padding:0 18px}
+    /* portada */
+    .hero{padding:34px 0 0}
+    .hero h1{font-size:2.35rem;margin-top:14px;letter-spacing:-.03em}
+    .hero .sub{font-size:1.01rem;margin-top:16px}
+    .hero-cta{flex-direction:column;align-items:stretch;gap:12px}
+    .hero-cta .btn{width:100%;justify-content:center}
+    /* títulos de sección un poco menores */
+    .head h2{font-size:1.78rem}
+    .head p{font-size:.97rem}
+    /* especialidades en 2 columnas = más dinámico */
+    .esp-grid{grid-template-columns:1fr 1fr;gap:14px;margin-top:32px}
+    .esp .cap{margin-top:10px}
+    /* galería en mosaico compacto de 3 */
+    .gal-grid{grid-template-columns:repeat(3,1fr);gap:8px;margin-top:28px}
+    /* tarjetas con sombra suave: se leen como tarjetas, no como lista */
+    .proj,.art,.news,.plan{box-shadow:0 6px 18px rgba(22,32,26,.07)}
+    .proj-grid,.prog-grid,.art-grid,.news-grid{gap:16px;margin-top:32px}
+    .plan{padding:26px 22px}
+    .plan .badge{left:22px}
+    .prog-guar{padding:26px 22px}
+    /* frambuesa: fila que se desliza con el dedo (no apilada) */
+    .fb-dock{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;gap:14px;padding:14px 2px 18px;-webkit-overflow-scrolling:touch}
+    .fb-stage{flex:0 0 auto}
+    .fb-img{width:96px;height:96px;border-width:3px}
+    .fb-dock .fb-stage:hover,.fb-dock .fb-stage:active{transform:scale(1.08) translateY(-3px)}
+    .fb-info{margin-top:26px;padding:24px 22px}
+    /* lector de artículos y contacto */
+    .reader-card{padding:30px 22px 36px}
+  }
 </style>
 </head>
 <body>
