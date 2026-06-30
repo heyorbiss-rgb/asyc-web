@@ -1,0 +1,28 @@
+{
+  "noticias": [
+    {
+      "fuente": "Sáuco · FIA · 2025",
+      "titulo": "El sáuco busca dar el salto de la recolección silvestre al cultivo comercial",
+      "resumen": "La FIA apoya el proyecto \"Diversificación de la Matriz Productiva de Berries\", que junto a INIA Carillanca, la Cooperativa Amuley Leftraru y Bayas del Sur impulsa el cultivo formal del sáuco en el sur de Chile.",
+      "url": "https://www.fia.cl/destacan-propiedades-medicinales-del-sauco-berry-desarrollado-en-proyecto-fia-bayas-de-sur/"
+    },
+    {
+      "fuente": "INIA Carillanca · jun 2026",
+      "titulo": "Frambuesas bajo techo superan las 20 toneladas por hectárea en La Araucanía",
+      "resumen": "Ensayos de INIA Carillanca con variedades tipo Santas bajo sistemas de protección lograron rendimientos sobre 20 t/ha, extendiendo la cosecha y reduciendo riesgos climáticos.",
+      "url": "https://www.inia.cl/2026/06/02/programa-araucania-fruticola-desarrolla-dia-de-campo-para-conocer-avances-en-produccion-de-frambuesa-bajo-techo-en-la-region/"
+    },
+    {
+      "fuente": "Portal Frutícola · mar 2026",
+      "titulo": "Los arándanos chilenos cierran la temporada al alza, con el orgánico en crecimiento",
+      "resumen": "La campaña 2025-2026 terminó con cerca de 92.900 toneladas exportadas, un 2,7% más que la temporada anterior, y las exportaciones orgánicas crecieron alrededor de 10%.",
+      "url": "https://www.portalfruticola.com/noticias/2026/03/25/arandanos-chile/"
+    },
+    {
+      "fuente": "Portal Frutícola · 2025",
+      "titulo": "Control biológico: aliados naturales para una agricultura más sostenible",
+      "resumen": "INIA e INDAP impulsan el manejo con enemigos naturales y bandas florales, reduciendo el uso de químicos y aprovechando la biodiversidad presente en cada predio.",
+      "url": "https://www.portalfruticola.com/noticias/2025/03/12/control-biologico-plaga/"
+    }
+  ]
+}

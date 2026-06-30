@@ -1,0 +1,40 @@
+{
+  "proyectos": [
+    {
+      "categoria": "Berries · Exportación",
+      "titulo": "Exportación de berries congelados — Cooperativa Amuley",
+      "descripcion": "Diseño de planta, modelo de negocio, proyectos de inversión, asesoría en proceso IQF, resolución sanitaria y gestión de exportación directa. Lautaro, La Araucanía.",
+      "imagen": "imagenes/p_amuley.jpg"
+    },
+    {
+      "categoria": "Berries · I+D 2023",
+      "titulo": "Diversificación de la matriz productiva de berries",
+      "descripcion": "Introducción de variedades y selección de ecotipos plus para el desarrollo del sáuco (Sambucus nigra) cultivado en el sur de Chile. Junto a INIA, Bayas del Sur, Amuley y Agrícola Trucao.",
+      "imagen": "imagenes/p_sauco23.jpg"
+    },
+    {
+      "categoria": "Berries · 2022",
+      "titulo": "Repoblamiento de sáuco con fines comerciales",
+      "descripcion": "Repoblamiento de sáuco (Sambucus nigra) con fines comerciales en las provincias de Malleco y Cautín, Región de La Araucanía.",
+      "imagen": "imagenes/p_sauco22.jpg"
+    },
+    {
+      "categoria": "Infraestructura",
+      "titulo": "Acumuladores subterráneos de agua",
+      "descripcion": "Diseño y construcción de acumuladores subterráneos de agua para asegurar la disponibilidad de riego durante la temporada.",
+      "imagen": "imagenes/p_agua.jpg"
+    },
+    {
+      "categoria": "Hortalizas",
+      "titulo": "Control de plagas y enfermedades en hortalizas",
+      "descripcion": "Asesoría en manejo biológico de plagas y enfermedades en hortalizas bajo invernadero y al aire libre — Angol, Renaico y Los Ángeles.",
+      "imagen": "imagenes/p_plagas.jpg"
+    },
+    {
+      "categoria": "Orgánico",
+      "titulo": "Control mecánico de malezas en huertos orgánicos",
+      "descripcion": "Estrategias de control mecánico de malezas para huertos orgánicos, reduciendo el uso de herbicidas y cuidando el suelo.",
+      "imagen": "imagenes/p_malezas.jpg"
+    }
+  ]
+}
