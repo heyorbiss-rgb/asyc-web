@@ -243,6 +243,39 @@
     .wrap{padding:0 22px}
     .reader-card{padding:34px 26px 40px}
   }
+  .admin-link{color:rgba(255,255,255,.45);font-size:.8rem;text-decoration:none;border:1px solid rgba(255,255,255,.2);padding:5px 12px;border-radius:4px;transition:all .2s;white-space:nowrap}
+  .admin-link:hover{color:#fff;border-color:rgba(255,255,255,.5)}
+  /* Evolución de la frambuesa (dock + info) */
+.frambuesa{background:var(--panel)}
+.fb-dock{display:flex;justify-content:center;align-items:flex-end;gap:18px;margin-top:54px;padding:20px 0 10px;flex-wrap:wrap}
+.fb-stage{background:none;border:none;cursor:pointer;padding:0;display:flex;flex-direction:column;align-items:center;gap:12px;transition:transform .28s cubic-bezier(.2,.8,.2,1)}
+.fb-img{display:block;width:130px;height:130px;border-radius:50%;overflow:hidden;border:4px solid #fff;box-shadow:0 10px 26px rgba(22,32,26,.14);transition:all .28s cubic-bezier(.2,.8,.2,1)}
+.fb-img img{width:100%;height:100%;object-fit:cover;display:block}
+.fb-label{font-weight:600;font-size:.92rem;color:var(--tinta);transition:color .2s}
+/* efecto dock: al pasar el mouse, la etapa crece; las vecinas un poco */
+.fb-dock:hover .fb-stage{transform:scale(.94)}
+.fb-dock .fb-stage:hover{transform:scale(1.22) translateY(-8px)}
+.fb-dock .fb-stage:hover + .fb-stage,
+.fb-dock .fb-stage:has(+ .fb-stage:hover){transform:scale(1.06) translateY(-3px)}
+.fb-stage:hover .fb-img{border-color:var(--verde);box-shadow:0 18px 40px rgba(46,107,52,.28)}
+.fb-stage:hover .fb-label{color:var(--verde)}
+.fb-stage.active .fb-img{border-color:var(--verde)}
+
+/* tarjeta de info */
+.fb-info{display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center;max-width:760px;margin:46px auto 0;background:#fff;border:1px solid var(--linea);border-radius:10px;padding:30px 34px}
+.fb-info-num span{font-size:2.6rem;font-weight:800;color:var(--verde);letter-spacing:-.03em;line-height:1}
+.fb-info-tx h3{font-size:1.4rem;margin-bottom:8px}
+.fb-info-tx p{color:var(--muted);font-size:.97rem;line-height:1.6}
+
+/* celular */
+@media(max-width:760px){
+  .fb-dock{gap:10px}
+  .fb-img{width:84px;height:84px;border-width:3px}
+  .fb-label{font-size:.78rem}
+  .fb-dock .fb-stage:hover{transform:scale(1.12) translateY(-4px)}
+  .fb-info{grid-template-columns:1fr;text-align:center;gap:12px;padding:26px 22px}
+}
+
 </style>
 </head>
 <body>
@@ -254,6 +287,7 @@
       <a href="#servicios">Servicios</a>
       <a href="#especialidades">Especialidades</a>
       <a href="#programas">Programas</a>
+      <a href="#frambuesa">El cultivo</a>
       <a href="#proyectos">Proyectos</a>
       <a href="#articulos">Artículos</a>
       <a href="#noticias">Noticias</a>
@@ -417,6 +451,50 @@
   </div>
 </section>
 
+<!-- Evolución de la frambuesa -->
+<section class="section frambuesa" id="frambuesa">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Conoce el cultivo</span>
+      <h2>La evolución de la frambuesa, etapa por etapa.</h2>
+      <p>Desde la flor hasta la cosecha, el fruto pasa por varias fases. Pasa el cursor (o el dedo) sobre cada etapa para verla en grande, y tócala para conocer en qué consiste.</p>
+    </div>
+
+    <div class="fb-dock" id="fbDock">
+      <button class="fb-stage" data-stage="0">
+        <span class="fb-img"><img src="imagenes/fb-1.jpg" alt="Floración de la frambuesa"></span>
+        <span class="fb-label">Floración</span>
+      </button>
+      <button class="fb-stage" data-stage="1">
+        <span class="fb-img"><img src="imagenes/fb-2.jpg" alt="Cuajado del fruto"></span>
+        <span class="fb-label">Cuajado</span>
+      </button>
+      <button class="fb-stage" data-stage="2">
+        <span class="fb-img"><img src="imagenes/fb-3.jpg" alt="Fruto verde en desarrollo"></span>
+        <span class="fb-label">Fruto verde</span>
+      </button>
+      <button class="fb-stage" data-stage="3">
+        <span class="fb-img"><img src="imagenes/fb-4.jpg" alt="Fruto en pinta, cambiando de color"></span>
+        <span class="fb-label">Pinta</span>
+      </button>
+      <button class="fb-stage" data-stage="4">
+        <span class="fb-img"><img src="imagenes/fb-5.jpg" alt="Frambuesa madura lista para cosecha"></span>
+        <span class="fb-label">Madura</span>
+      </button>
+    </div>
+
+    <!-- Tarjeta de información (cambia al pinchar una etapa) -->
+    <div class="fb-info" id="fbInfo">
+      <div class="fb-info-num"><span id="fbNum">01</span></div>
+      <div class="fb-info-tx">
+        <h3 id="fbTitle">Floración</h3>
+        <p id="fbText">Las flores se abren y comienza la polinización. Es una etapa crítica: el clima y los polinizadores definen cuántos frutos se formarán. Las heladas tardías pueden dañar la floración.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 <section class="section" id="proyectos">
   <div class="wrap">
     <div class="head">
@@ -500,6 +578,7 @@
   <div class="wrap foot-row">
     <img src="imagenes/logo_white.png" alt="ASYC Agro">
     <div>© 2026 ASYC Agro S.p.A · José Miguel Carrera 151, Lautaro, La Araucanía, Chile</div>
+    <a href="/admin/" class="admin-link" title="Acceso administrador">Administrar</a>
   </div>
 </footer>
 
@@ -571,6 +650,36 @@ async function loadContent(){
  }catch(e){console.error("No se pudo cargar el contenido (usa Live Server o el sitio publicado, no doble clic):",e);}
 }
 loadContent();
+</script>
+<script>
+/* Evolución de la frambuesa */
+(function(){
+  var etapas = [
+    {n:"01", t:"Floración",
+     d:"Las flores se abren y comienza la polinización. Es una etapa crítica: el clima y los polinizadores definen cuántos frutos se formarán. Las heladas tardías pueden dañar la floración."},
+    {n:"02", t:"Cuajado",
+     d:"Tras la fecundación, la flor se transforma en fruto. El ovario empieza a crecer rápidamente por división celular. En esta fase puede caer un porcentaje de frutos; los que avanzan seguirán hasta la madurez."},
+    {n:"03", t:"Fruto verde",
+     d:"El fruto crece en tamaño por expansión celular. Aún está firme y de color verde. Se acumulan almidón y ácidos. Un buen aporte de fósforo y potasio es clave en este momento."},
+    {n:"04", t:"Pinta",
+     d:"El fruto cambia de color: del verde pasa a tonos rosados y rojos. Comienzan los cambios de aroma, textura y azúcares que anuncian la madurez. Hay que cuidar el riego y el clima."},
+    {n:"05", t:"Madura",
+     d:"La frambuesa alcanza su color, dulzor y aroma óptimos, y se separa fácilmente del receptáculo. La cosecha es escalonada (varios pases) y se hace en las primeras horas del día para cuidar la fruta."}
+  ];
+  var dock = document.getElementById('fbDock');
+  if(!dock) return;
+  var numEl=document.getElementById('fbNum'), titEl=document.getElementById('fbTitle'), txtEl=document.getElementById('fbText');
+  function pick(i){
+    var e=etapas[i]; if(!e) return;
+    numEl.textContent=e.n; titEl.textContent=e.t; txtEl.textContent=e.d;
+    dock.querySelectorAll('.fb-stage').forEach(function(b,idx){ b.classList.toggle('active', idx===i); });
+  }
+  dock.querySelectorAll('.fb-stage').forEach(function(btn){
+    btn.addEventListener('click', function(){ pick(parseInt(btn.getAttribute('data-stage'),10)); });
+  });
+  pick(0); // muestra la primera al cargar
+})();
+
 </script>
 </body>
 </html>
