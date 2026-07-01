@@ -276,7 +276,6 @@
   .fb-info{grid-template-columns:1fr;text-align:center;gap:12px;padding:26px 22px}
 }
 
-
   /* ===== Celular: diseño afinado y dinámico ===== */
   @media(max-width:600px){
     .section,.contacto{padding:46px 0}
@@ -465,6 +464,24 @@
   @media(max-width:600px){
     .nvd-grid{grid-template-columns:1fr;gap:20px;margin-top:32px}
     .nvd{box-shadow:0 8px 22px rgba(22,32,26,.07)}
+  }
+
+  /* ===== Fixes: especialidades (recorte uniforme) + header + novedades botón ===== */
+  /* Especialidades: fotos cuadradas y recortadas iguales (arregla el blanco del tomate) */
+  .esp-grid .frame{aspect-ratio:1/1;overflow:hidden;border-radius:4px;background:var(--panel)}
+  .esp-grid .frame img{width:100%;height:100%;object-fit:cover;transition:transform .55s}
+  .esp-grid figure{cursor:default}
+  .esp-grid figure:hover .frame img{transform:scale(1.05)}
+  /* Header: aire para el botón "Solicitar asesoría" */
+  .nav-links a{white-space:nowrap}
+  .nav-links{gap:24px}
+  .nav-cta{margin-left:22px}
+  .nav-cta .btn{white-space:nowrap}
+  /* Novedades como botón (reset visual) */
+  .nvd{text-align:left;font-family:inherit;cursor:pointer;border:1px solid var(--linea);padding:0;width:100%}
+  @media(max-width:600px){
+    /* Especialidades móvil: 1 columna, foto cuadrada grande */
+    .esp-grid{grid-template-columns:1fr;gap:26px;margin-top:30px}
   }
 </style>
 </head>
@@ -697,19 +714,6 @@
   </div>
 </section>
 
-<section class="section galeria" id="galeria">
-  <div class="wrap">
-    <div class="head">
-      <span class="eyebrow">En terreno</span>
-      <h2>Nuestro trabajo, día a día.</h2>
-      <p>Talleres, asesorías, charlas técnicas y giras comerciales. Haz clic para ampliar.</p>
-    </div>
-    <div class="gal-grid">
-      <div class="gal" data-full="imagenes/g_talleres.jpg"><img src="imagenes/g_talleres.jpg" alt="Talleres en terreno"><div class="lbl">Talleres en terreno</div></div><div class="gal" data-full="imagenes/g_asesorias.jpg"><img src="imagenes/g_asesorias.jpg" alt="Asesorías especializadas"><div class="lbl">Asesorías especializadas</div></div><div class="gal" data-full="imagenes/g_poda.jpg"><img src="imagenes/g_poda.jpg" alt="Estrategias de poda en arándanos"><div class="lbl">Estrategias de poda en arándanos</div></div><div class="gal" data-full="imagenes/g_servicios.jpg"><img src="imagenes/g_servicios.jpg" alt="Servicios ASYC Agro"><div class="lbl">Servicios ASYC Agro</div></div><div class="gal" data-full="imagenes/g_charlas.jpg"><img src="imagenes/g_charlas.jpg" alt="Charlas técnicas"><div class="lbl">Charlas técnicas</div></div><div class="gal" data-full="imagenes/g_gira.jpg"><img src="imagenes/g_gira.jpg" alt="Gira comercial · Argentina"><div class="lbl">Gira comercial · Argentina</div></div>
-    </div>
-  </div>
-</section>
-
 <section class="section" id="novedades">
   <div class="wrap">
     <div class="head">
@@ -775,7 +779,6 @@
     </form>
   </div>
 </section>
-
 
 <footer>
   <div class="wrap foot-row">
@@ -850,7 +853,8 @@ async function loadContent(){
   const ng=document.getElementById("news-grid");
   if(ng&&nx.noticias){ng.innerHTML=nx.noticias.map(n=>'<a class="news" href="'+esc(n.url)+'" target="_blank" rel="noopener"><div class="src">'+esc(n.fuente)+'</div><h3>'+esc(n.titulo)+'</h3><p>'+esc(n.resumen)+'</p><span class="more">Leer la nota completa <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg></span></a>').join('');}
   const bg=document.getElementById("novedades-grid"); const nvsec=document.getElementById("novedades");
-  if(bg&&bx&&bx.novedades&&bx.novedades.length){bg.innerHTML=bx.novedades.map(nv=>'<article class="nvd"><div class="nvd-frame"><img src="'+esc(nv.imagen)+'" alt="'+esc(nv.titulo)+'"></div><div class="nvd-tx"><div class="nvd-date">'+esc(nv.fecha)+'</div><h3>'+esc(nv.titulo)+'</h3><p>'+esc(nv.texto)+'</p></div></article>').join('');}
+  if(bg&&bx&&bx.novedades&&bx.novedades.length){bg.innerHTML=bx.novedades.map(nv=>'<button class="nvd" data-img="'+esc(nv.imagen)+'" data-cat="'+esc(nv.fecha)+'" data-title="'+esc(nv.titulo)+'" data-desc="'+esc(nv.texto)+'"><div class="nvd-frame"><img src="'+esc(nv.imagen)+'" alt="'+esc(nv.titulo)+'"></div><div class="nvd-tx"><div class="nvd-date">'+esc(nv.fecha)+'</div><h3>'+esc(nv.titulo)+'</h3><p>'+esc(nv.texto)+'</p></div></button>').join('');
+    bg.querySelectorAll('.nvd').forEach(function(el){el.addEventListener('click',function(){openProj(el);});});}
   else if(nvsec){nvsec.style.display='none';}
   const pg=document.getElementById("proj-grid");
   if(pg&&px.proyectos){pg.innerHTML=px.proyectos.map(p=>'<button class="proj" data-img="'+esc(p.imagen)+'" data-cat="'+esc(p.categoria)+'" data-title="'+esc(p.titulo)+'" data-desc="'+esc(p.descripcion)+'"><div class="frame"><img src="'+esc(p.imagen)+'" alt="'+esc(p.titulo)+'"></div><div class="tx"><div class="cat">'+esc(p.categoria)+'</div><h3>'+esc(p.titulo)+'</h3><p>'+esc(p.descripcion)+'</p><span class="more">Ver proyecto <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div></button>').join('');
