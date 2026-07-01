@@ -1,0 +1,16 @@
+{
+  "novedades": [
+    {
+      "fecha": "Junio 2026",
+      "titulo": "Visita técnica a huerto de arándanos en Lautaro",
+      "texto": "Estuvimos en terreno revisando el estado de las plantas y ajustando el manejo de poda para la próxima temporada. Un gusto acompañar a los productores en cada etapa.",
+      "imagen": "imagenes/g_asesorias.jpg"
+    },
+    {
+      "fecha": "Mayo 2026",
+      "titulo": "Taller de control biológico con la comunidad",
+      "texto": "Compartimos con un grupo de agricultores las estrategias de manejo biológico de plagas en hortalizas bajo invernadero. La producción sana parte por el conocimiento.",
+      "imagen": "imagenes/g_talleres.jpg"
+    }
+  ]
+}
