@@ -344,6 +344,128 @@
     .reader-card{padding:28px 20px 34px}
     .foot-row{flex-direction:column;gap:14px;text-align:center;align-items:center}
   }
+
+  /* ===== Dock hover en PC + carruseles + expandir proyectos ===== */
+  .proc-grid .step,.prog-grid .plan{transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s}
+  @media (hover:hover) and (min-width:601px){
+    .proc-grid:hover .step{transform:scale(.95);opacity:.9}
+    .proc-grid .step:hover{transform:scale(1.07) translateY(-6px);opacity:1;z-index:2}
+    .prog-grid:hover .plan{transform:scale(.97);opacity:.94}
+    .prog-grid .plan:hover{transform:scale(1.05) translateY(-8px);opacity:1;z-index:2}
+  }
+  /* Proyectos: texto recortado que se expande al pinchar */
+  .proj .tx p{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;transition:all .3s}
+  .proj{cursor:pointer;transition:transform .3s,box-shadow .3s}
+  .proj.expanded{grid-column:1/-1;box-shadow:0 20px 50px rgba(22,32,26,.16)}
+  .proj.expanded .tx p{-webkit-line-clamp:unset;overflow:visible}
+  .proj.expanded .frame{aspect-ratio:21/8}
+  .proj.expanded .tx{padding:30px 34px}
+  .proj.expanded .tx h3{font-size:1.5rem}
+  @media (hover:hover) and (min-width:601px){
+    .proj-grid:hover .proj:not(.expanded){opacity:.92}
+    .proj-grid .proj:hover{transform:translateY(-5px);opacity:1}
+  }
+
+  /* ===== Celular: carruseles deslizables ===== */
+  @media(max-width:600px){
+    /* Cómo trabajamos: carrusel */
+    .proc-grid{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:14px;scroll-snap-type:x mandatory;padding:6px 2px 14px;border-top:none;-webkit-overflow-scrolling:touch}
+    .proc-grid::-webkit-scrollbar{display:none}
+    .step{flex:0 0 76%;scroll-snap-align:center;border:1px solid rgba(255,255,255,.28);border-radius:12px;padding:24px 22px}
+    .step.is-center{transform:scale(1.03)}
+    /* Planes: carrusel */
+    .prog-grid{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:16px;scroll-snap-type:x mandatory;padding:8px 2px 18px;margin-top:30px;-webkit-overflow-scrolling:touch}
+    .prog-grid::-webkit-scrollbar{display:none}
+    .plan{flex:0 0 84%;scroll-snap-align:center}
+    .plan.is-center{transform:scale(1.02)}
+    /* Proyectos: 1 col, la expandida se ve completa */
+    .proj.expanded .frame{aspect-ratio:16/10}
+    .proj.expanded .tx{padding:22px 20px}
+    .proj.expanded .tx h3{font-size:1.25rem}
+  }
+
+  /* ---- Proyecto expandido: imagen COMPLETA (sin cortar) + texto al lado ---- */
+  .proj.expanded{grid-column:1/-1;display:grid;grid-template-columns:1.15fr 1fr;align-items:stretch}
+  .proj.expanded .frame{aspect-ratio:auto;min-height:360px;background:var(--panel-2);display:flex;align-items:center;justify-content:center}
+  .proj.expanded .frame img{width:100%;height:100%;object-fit:contain;transform:none}
+  .proj.expanded .tx{padding:36px 40px;align-self:center}
+  .proj.expanded .tx h3{font-size:1.55rem;margin-bottom:12px}
+  .proj.expanded .tx p{-webkit-line-clamp:unset;overflow:visible;font-size:1rem;line-height:1.65}
+
+  /* ---- "Cómo trabajamos": cambia de color al pasar (mouse) — elegante ---- */
+  .step{border-radius:12px}
+  @media (hover:hover) and (min-width:601px){
+    .proc-grid .step:hover{background:rgba(255,255,255,.12);box-shadow:0 18px 44px rgba(0,0,0,.22)}
+    .proc-grid .step:hover .sn{color:#eaf6ec}
+    .proc-grid .step:hover h3{color:#fff}
+    .proc-grid .step:hover p{color:#eaf3ea}
+  }
+
+  /* ---- Ajustes en celular ---- */
+  @media(max-width:600px){
+    /* proyecto expandido: imagen completa arriba, texto abajo */
+    .proj.expanded{display:block}
+    .proj.expanded .frame{min-height:0;aspect-ratio:4/3}
+    .proj.expanded .tx{padding:24px 22px}
+    .proj.expanded .tx h3{font-size:1.3rem}
+    /* paso del centro: se resalta con color al deslizar */
+    .step.is-center{background:rgba(255,255,255,.14);box-shadow:0 14px 34px rgba(0,0,0,.2)}
+    .step.is-center .sn{color:#eaf6ec}
+    .step.is-center h3{color:#fff}
+    /* plan del centro: leve resalte */
+    .plan.is-center{box-shadow:0 16px 40px rgba(46,107,52,.2)}
+  }
+
+  /* ===== Ventana flotante de proyectos ===== */
+  .pmodal{position:fixed;inset:0;z-index:96;background:rgba(14,25,18,.62);display:none;justify-content:center;align-items:flex-start;padding:40px 20px;overflow-y:auto}
+  .pmodal.open{display:flex}
+  .pmodal-card{position:relative;background:var(--blanco);max-width:880px;width:100%;border-radius:10px;overflow:hidden;box-shadow:0 34px 90px rgba(0,0,0,.45);height:max-content;animation:pmIn .28s ease}
+  @keyframes pmIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+  .pmodal-img{background:var(--panel-2);display:flex;align-items:center;justify-content:center;max-height:64vh}
+  .pmodal-img img{width:100%;height:auto;max-height:64vh;object-fit:contain;display:block}
+  .pmodal-tx{padding:34px 42px 42px}
+  .pmodal-tx .cat{font-family:'Plus Jakarta Sans',sans-serif;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--verde-2)}
+  .pmodal-tx h2{font-size:1.7rem;line-height:1.15;letter-spacing:-.02em;margin:12px 0 16px}
+  .pmodal-tx p{font-size:1.02rem;line-height:1.7;color:var(--tinta-2)}
+  .pmodal-close{position:absolute;top:16px;right:16px;background:rgba(255,255,255,.92);border:1px solid var(--linea);border-radius:22px;padding:8px 16px;cursor:pointer;z-index:2;font-family:'Plus Jakarta Sans',sans-serif;font-size:.74rem;font-weight:600;letter-spacing:.04em;color:var(--tinta);transition:background .2s}
+  .pmodal-close:hover{background:#fff}
+  @media(max-width:600px){
+    .pmodal{padding:0}
+    .pmodal-card{border-radius:0;min-height:100%}
+    .pmodal-tx{padding:26px 22px 40px}
+    .pmodal-tx h2{font-size:1.35rem}
+  }
+
+  /* ===== Correcciones móvil: especialidades + barra experiencia ===== */
+  @media(max-width:600px){
+    /* Especialidades: 1 columna, limpia y legible */
+    .esp-grid{grid-template-columns:1fr;gap:24px;margin-top:30px}
+    .esp-grid .cap h3{font-size:1.15rem}
+    .esp-grid .cap p{font-size:.92rem}
+    /* Barra de experiencia: filas ordenadas etiqueta → valor */
+    .sheet-grid{grid-template-columns:1fr}
+    .sheet-cell{border-left:none;border-top:1px solid var(--linea-2);display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:16px 22px;text-align:left}
+    .sheet-cell:first-child{border-top:none}
+    .sheet-cell .k{font-size:.6rem;margin:0;flex:none;padding-top:2px}
+    .sheet-cell .v{font-size:1.02rem;margin:0;text-align:right}
+  }
+
+  /* ===== Novedades (bitácora / día a día) ===== */
+  .nvd-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:52px}
+  .nvd{background:var(--blanco);border:1px solid var(--linea);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s}
+  .nvd-frame{aspect-ratio:4/3;overflow:hidden;background:var(--panel-2)}
+  .nvd-frame img{width:100%;height:100%;object-fit:cover;transition:transform .55s}
+  .nvd:hover{transform:translateY(-6px);box-shadow:0 18px 44px rgba(22,32,26,.12)}
+  .nvd:hover .nvd-frame img{transform:scale(1.05)}
+  .nvd-tx{padding:22px 24px 26px;display:flex;flex-direction:column;gap:8px}
+  .nvd-date{font-family:'Plus Jakarta Sans',sans-serif;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--verde-2)}
+  .nvd-tx h3{font-size:1.15rem;line-height:1.25;letter-spacing:-.01em}
+  .nvd-tx p{font-size:.94rem;line-height:1.6;color:var(--tinta-2)}
+  @media(max-width:920px){.nvd-grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:600px){
+    .nvd-grid{grid-template-columns:1fr;gap:20px;margin-top:32px}
+    .nvd{box-shadow:0 8px 22px rgba(22,32,26,.07)}
+  }
 </style>
 </head>
 <body>
@@ -357,6 +479,7 @@
       <a href="#programas">Programas</a>
       <a href="#frambuesa">El cultivo</a>
       <a href="#proyectos">Proyectos</a>
+          <a href="#novedades">Novedades</a>
       <a href="#articulos">Artículos</a>
       <a href="#noticias">Noticias</a>
       <a href="#contacto">Contacto</a>
@@ -409,6 +532,21 @@
   </div>
 </section>
 
+<section class="section" id="especialidades">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Especialidades</span>
+      <h2>Especialistas, no generalistas.</h2>
+      <p>Cultivos con trayectoria comprobada, en producción orgánica y convencional, a lo largo de Chile.</p>
+    </div>
+    <div class="esp-grid">
+      <figure><div class="frame"><img src="imagenes/berries.jpg" alt="Cosecha de arándano"></div><div class="cap"><span class="mono">Cultivo 01</span><h3>Berries</h3><p>Arándano, frambuesa, frutilla y sáuco. Nuestro origen y mayor experiencia, del establecimiento a la exportación.</p></div></figure>
+      <figure><div class="frame"><img src="imagenes/tomate.jpg" alt="Tomate y hortalizas"></div><div class="cap"><span class="mono">Cultivo 02</span><h3>Tomate y hortalizas</h3><p>Manejo biológico de plagas y enfermedades en suelo e hidroponía, al aire libre y bajo invernadero.</p></div></figure>
+      <figure><div class="frame"><img src="imagenes/frutales.jpg" alt="Huerto de sáuco"></div><div class="cap"><span class="mono">Cultivo 03</span><h3>Frutales y orgánico</h3><p>Establecimiento y manejo de huertos en distintas especies y escalas, orgánicos y convencionales.</p></div></figure>
+    </div>
+  </div>
+</section>
+
 <section class="section why" id="porque">
   <div class="wrap why-grid">
     <figure class="why-fig"><img src="imagenes/why.jpg" alt="Evaluación de suelo en terreno"></figure>
@@ -425,17 +563,63 @@
   </div>
 </section>
 
-<section class="section" id="especialidades">
+<section class="section proc" id="proceso">
   <div class="wrap">
     <div class="head">
-      <span class="eyebrow">Especialidades</span>
-      <h2>Especialistas, no generalistas.</h2>
-      <p>Cultivos con trayectoria comprobada, en producción orgánica y convencional, a lo largo de Chile.</p>
+      <span class="eyebrow">Cómo trabajamos</span>
+      <h2>Lo acompañamos en todo el ciclo.</h2>
+      <p>Desde la primera evaluación hasta la venta de la fruta. Una asesoría oportuna evita errores costosos y acelera los resultados.</p>
     </div>
-    <div class="esp-grid">
-      <figure><div class="frame"><img src="imagenes/berries.jpg" alt="Cosecha de arándano"></div><div class="cap"><span class="mono">Cultivo 01</span><h3>Berries</h3><p>Arándano, frambuesa, frutilla y sáuco. Nuestro origen y mayor experiencia, del establecimiento a la exportación.</p></div></figure>
-      <figure><div class="frame"><img src="imagenes/tomate.jpg" alt="Tomate y hortalizas"></div><div class="cap"><span class="mono">Cultivo 02</span><h3>Tomate y hortalizas</h3><p>Manejo biológico de plagas y enfermedades en suelo e hidroponía, al aire libre y bajo invernadero.</p></div></figure>
-      <figure><div class="frame"><img src="imagenes/frutales.jpg" alt="Huerto de sáuco"></div><div class="cap"><span class="mono">Cultivo 03</span><h3>Frutales y orgánico</h3><p>Establecimiento y manejo de huertos en distintas especies y escalas, orgánicos y convencionales.</p></div></figure>
+    <div class="proc-grid">
+      <div class="step"><div class="sn">01 / Evaluación</div><h3>Diagnóstico</h3><p>Suelos, calicatas, especies y objetivos del negocio.</p></div>
+      <div class="step"><div class="sn">02 / Diseño</div><h3>Establecimiento</h3><p>Selección de variedades y diseño del huerto.</p></div>
+      <div class="step"><div class="sn">03 / Producción</div><h3>Manejo</h3><p>Sanidad, productividad y control de costos en temporada.</p></div>
+      <div class="step"><div class="sn">04 / Cosecha</div><h3>Postcosecha</h3><p>Cosecha y control de calidad de la fruta.</p></div>
+      <div class="step"><div class="sn">05 / Mercado</div><h3>Comercialización</h3><p>Venta, exportación y modelo de negocio sostenible.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- Evolución de la frambuesa -->
+
+<section class="section frambuesa" id="frambuesa">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Conoce el cultivo</span>
+      <h2>La evolución de la frambuesa, etapa por etapa.</h2>
+      <p>Desde la flor hasta la cosecha, el fruto pasa por varias fases. Pasa el cursor (o el dedo) sobre cada etapa para verla en grande, y tócala para conocer en qué consiste.</p>
+    </div>
+
+    <div class="fb-dock" id="fbDock">
+      <button class="fb-stage" data-stage="0">
+        <span class="fb-img"><img src="imagenes/fb-1.jpg" alt="Floración de la frambuesa"></span>
+        <span class="fb-label">Floración</span>
+      </button>
+      <button class="fb-stage" data-stage="1">
+        <span class="fb-img"><img src="imagenes/fb-2.jpg" alt="Cuajado del fruto"></span>
+        <span class="fb-label">Cuajado</span>
+      </button>
+      <button class="fb-stage" data-stage="2">
+        <span class="fb-img"><img src="imagenes/fb-3.jpg" alt="Fruto verde en desarrollo"></span>
+        <span class="fb-label">Fruto verde</span>
+      </button>
+      <button class="fb-stage" data-stage="3">
+        <span class="fb-img"><img src="imagenes/fb-4.jpg" alt="Fruto en pinta, cambiando de color"></span>
+        <span class="fb-label">Pinta</span>
+      </button>
+      <button class="fb-stage" data-stage="4">
+        <span class="fb-img"><img src="imagenes/fb-5.jpg" alt="Frambuesa madura lista para cosecha"></span>
+        <span class="fb-label">Madura</span>
+      </button>
+    </div>
+
+    <!-- Tarjeta de información (cambia al pinchar una etapa) -->
+    <div class="fb-info" id="fbInfo">
+      <div class="fb-info-num"><span id="fbNum">01</span></div>
+      <div class="fb-info-tx">
+        <h3 id="fbTitle">Floración</h3>
+        <p id="fbText">Las flores se abren y comienza la polinización. Es una etapa crítica: el clima y los polinizadores definen cuántos frutos se formarán. Las heladas tardías pueden dañar la floración.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -502,67 +686,6 @@
   </div>
 </section>
 
-<section class="section proc" id="proceso">
-  <div class="wrap">
-    <div class="head">
-      <span class="eyebrow">Cómo trabajamos</span>
-      <h2>Lo acompañamos en todo el ciclo.</h2>
-      <p>Desde la primera evaluación hasta la venta de la fruta. Una asesoría oportuna evita errores costosos y acelera los resultados.</p>
-    </div>
-    <div class="proc-grid">
-      <div class="step"><div class="sn">01 / Evaluación</div><h3>Diagnóstico</h3><p>Suelos, calicatas, especies y objetivos del negocio.</p></div>
-      <div class="step"><div class="sn">02 / Diseño</div><h3>Establecimiento</h3><p>Selección de variedades y diseño del huerto.</p></div>
-      <div class="step"><div class="sn">03 / Producción</div><h3>Manejo</h3><p>Sanidad, productividad y control de costos en temporada.</p></div>
-      <div class="step"><div class="sn">04 / Cosecha</div><h3>Postcosecha</h3><p>Cosecha y control de calidad de la fruta.</p></div>
-      <div class="step"><div class="sn">05 / Mercado</div><h3>Comercialización</h3><p>Venta, exportación y modelo de negocio sostenible.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- Evolución de la frambuesa -->
-<section class="section frambuesa" id="frambuesa">
-  <div class="wrap">
-    <div class="head">
-      <span class="eyebrow">Conoce el cultivo</span>
-      <h2>La evolución de la frambuesa, etapa por etapa.</h2>
-      <p>Desde la flor hasta la cosecha, el fruto pasa por varias fases. Pasa el cursor (o el dedo) sobre cada etapa para verla en grande, y tócala para conocer en qué consiste.</p>
-    </div>
-
-    <div class="fb-dock" id="fbDock">
-      <button class="fb-stage" data-stage="0">
-        <span class="fb-img"><img src="imagenes/fb-1.jpg" alt="Floración de la frambuesa"></span>
-        <span class="fb-label">Floración</span>
-      </button>
-      <button class="fb-stage" data-stage="1">
-        <span class="fb-img"><img src="imagenes/fb-2.jpg" alt="Cuajado del fruto"></span>
-        <span class="fb-label">Cuajado</span>
-      </button>
-      <button class="fb-stage" data-stage="2">
-        <span class="fb-img"><img src="imagenes/fb-3.jpg" alt="Fruto verde en desarrollo"></span>
-        <span class="fb-label">Fruto verde</span>
-      </button>
-      <button class="fb-stage" data-stage="3">
-        <span class="fb-img"><img src="imagenes/fb-4.jpg" alt="Fruto en pinta, cambiando de color"></span>
-        <span class="fb-label">Pinta</span>
-      </button>
-      <button class="fb-stage" data-stage="4">
-        <span class="fb-img"><img src="imagenes/fb-5.jpg" alt="Frambuesa madura lista para cosecha"></span>
-        <span class="fb-label">Madura</span>
-      </button>
-    </div>
-
-    <!-- Tarjeta de información (cambia al pinchar una etapa) -->
-    <div class="fb-info" id="fbInfo">
-      <div class="fb-info-num"><span id="fbNum">01</span></div>
-      <div class="fb-info-tx">
-        <h3 id="fbTitle">Floración</h3>
-        <p id="fbText">Las flores se abren y comienza la polinización. Es una etapa crítica: el clima y los polinizadores definen cuántos frutos se formarán. Las heladas tardías pueden dañar la floración.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-
 <section class="section" id="proyectos">
   <div class="wrap">
     <div class="head">
@@ -584,6 +707,17 @@
     <div class="gal-grid">
       <div class="gal" data-full="imagenes/g_talleres.jpg"><img src="imagenes/g_talleres.jpg" alt="Talleres en terreno"><div class="lbl">Talleres en terreno</div></div><div class="gal" data-full="imagenes/g_asesorias.jpg"><img src="imagenes/g_asesorias.jpg" alt="Asesorías especializadas"><div class="lbl">Asesorías especializadas</div></div><div class="gal" data-full="imagenes/g_poda.jpg"><img src="imagenes/g_poda.jpg" alt="Estrategias de poda en arándanos"><div class="lbl">Estrategias de poda en arándanos</div></div><div class="gal" data-full="imagenes/g_servicios.jpg"><img src="imagenes/g_servicios.jpg" alt="Servicios ASYC Agro"><div class="lbl">Servicios ASYC Agro</div></div><div class="gal" data-full="imagenes/g_charlas.jpg"><img src="imagenes/g_charlas.jpg" alt="Charlas técnicas"><div class="lbl">Charlas técnicas</div></div><div class="gal" data-full="imagenes/g_gira.jpg"><img src="imagenes/g_gira.jpg" alt="Gira comercial · Argentina"><div class="lbl">Gira comercial · Argentina</div></div>
     </div>
+  </div>
+</section>
+
+<section class="section" id="novedades">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Novedades</span>
+      <h2>Nuestro día a día.</h2>
+      <p>Actividades, avances y lo que vamos viviendo en terreno, contado por nuestro equipo.</p>
+    </div>
+    <div class="nvd-grid" id="novedades-grid"></div>
   </div>
 </section>
 
@@ -642,6 +776,7 @@
   </div>
 </section>
 
+
 <footer>
   <div class="wrap foot-row">
     <img src="imagenes/logo_white.png" alt="ASYC Agro">
@@ -653,6 +788,7 @@
 <a class="wa-float" href="https://wa.me/56982268277" target="_blank" rel="noopener" aria-label="WhatsApp"><svg width="30" height="30" viewBox="0 0 24 24" fill="#fff"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.207zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg></a>
 
 <div class="lb" id="lb"><button class="lb-close" id="lbClose">&times;</button><img id="lbImg" src="" alt=""></div>
+<div class="pmodal" id="pModal"><div class="pmodal-card"><button class="pmodal-close" id="pModalClose">Cerrar &times;</button><div class="pmodal-img"><img id="pModalImg" src="" alt=""></div><div class="pmodal-tx"><div class="cat" id="pModalCat"></div><h2 id="pModalTitle"></h2><p id="pModalDesc"></p></div></div></div>
 <div class="reader" id="reader"><div class="reader-card"><button class="reader-close" id="readerClose">Cerrar &times;</button><div id="readerBody"></div></div></div>
 
 <script>
@@ -704,7 +840,8 @@ function esc(s){return (s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</g
 async function loadContent(){
  try{
   const j=async p=>{const r=await fetch(p,{cache:"no-store"});return r.json();};
-  const [tx,nx,px]=await Promise.all([j("content/textos.json"),j("content/noticias.json"),j("content/proyectos.json")]);
+  const jj=async p=>{try{return await j(p);}catch(e){return null;}};
+  const [tx,nx,px,bx]=await Promise.all([j("content/textos.json"),j("content/noticias.json"),j("content/proyectos.json"),jj("content/novedades.json")]);
   const set=(id,v)=>{const el=document.getElementById(id);if(el&&v!=null)el.textContent=v;};
   const h1=document.getElementById("t-hero-h1"); if(h1) h1.innerHTML=esc(tx.hero_titulo_1)+" <span>"+esc(tx.hero_titulo_2)+"</span>";
   set("t-hero-sub",tx.hero_sub); set("t-cta-h2",tx.cta_titulo); set("t-cta-p",tx.cta_texto);
@@ -712,9 +849,12 @@ async function loadContent(){
   set("t-direccion",tx.direccion); set("t-region",tx.region); set("t-horario",tx.horario);
   const ng=document.getElementById("news-grid");
   if(ng&&nx.noticias){ng.innerHTML=nx.noticias.map(n=>'<a class="news" href="'+esc(n.url)+'" target="_blank" rel="noopener"><div class="src">'+esc(n.fuente)+'</div><h3>'+esc(n.titulo)+'</h3><p>'+esc(n.resumen)+'</p><span class="more">Leer la nota completa <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg></span></a>').join('');}
+  const bg=document.getElementById("novedades-grid"); const nvsec=document.getElementById("novedades");
+  if(bg&&bx&&bx.novedades&&bx.novedades.length){bg.innerHTML=bx.novedades.map(nv=>'<article class="nvd"><div class="nvd-frame"><img src="'+esc(nv.imagen)+'" alt="'+esc(nv.titulo)+'"></div><div class="nvd-tx"><div class="nvd-date">'+esc(nv.fecha)+'</div><h3>'+esc(nv.titulo)+'</h3><p>'+esc(nv.texto)+'</p></div></article>').join('');}
+  else if(nvsec){nvsec.style.display='none';}
   const pg=document.getElementById("proj-grid");
-  if(pg&&px.proyectos){pg.innerHTML=px.proyectos.map(p=>'<button class="proj" data-full="'+esc(p.imagen)+'"><div class="frame"><img src="'+esc(p.imagen)+'" alt="'+esc(p.titulo)+'"></div><div class="tx"><div class="cat">'+esc(p.categoria)+'</div><h3>'+esc(p.titulo)+'</h3><p>'+esc(p.descripcion)+'</p><span class="more">Ver proyecto <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div></button>').join('');
-   pg.querySelectorAll('[data-full]').forEach(function(el){el.addEventListener('click',function(){if(typeof openLb==='function')openLb(el.getAttribute('data-full'));});});}
+  if(pg&&px.proyectos){pg.innerHTML=px.proyectos.map(p=>'<button class="proj" data-img="'+esc(p.imagen)+'" data-cat="'+esc(p.categoria)+'" data-title="'+esc(p.titulo)+'" data-desc="'+esc(p.descripcion)+'"><div class="frame"><img src="'+esc(p.imagen)+'" alt="'+esc(p.titulo)+'"></div><div class="tx"><div class="cat">'+esc(p.categoria)+'</div><h3>'+esc(p.titulo)+'</h3><p>'+esc(p.descripcion)+'</p><span class="more">Ver proyecto <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div></button>').join('');
+   pg.querySelectorAll('.proj').forEach(function(el){el.addEventListener('click',function(){openProj(el);});});}
  }catch(e){console.error("No se pudo cargar el contenido (usa Live Server o el sitio publicado, no doble clic):",e);}
 }
 loadContent();
@@ -748,6 +888,55 @@ loadContent();
   pick(0); // muestra la primera al cargar
 })();
 
+</script>
+
+<script>
+/* Resalta la tarjeta del centro al deslizar carruseles (solo si hay scroll horizontal) */
+(function(){
+  function centerEmphasis(sel){
+    document.querySelectorAll(sel).forEach(function(c){
+      function upd(){
+        // si no hay scroll horizontal (PC en grilla), quita resaltados
+        if(c.scrollWidth <= c.clientWidth + 4){
+          c.querySelectorAll(':scope > *').forEach(function(it){it.classList.remove('is-center');});
+          return;
+        }
+        var cRect=c.getBoundingClientRect(), cx=cRect.left+cRect.width/2, best=null, bd=1e9;
+        var items=c.querySelectorAll(':scope > *');
+        items.forEach(function(it){
+          var r=it.getBoundingClientRect(), ix=r.left+r.width/2, d=Math.abs(ix-cx);
+          if(d<bd){bd=d;best=it;}
+        });
+        items.forEach(function(it){it.classList.toggle('is-center', it===best);});
+      }
+      c.addEventListener('scroll',function(){window.requestAnimationFrame(upd);},{passive:true});
+      window.addEventListener('resize',function(){window.requestAnimationFrame(upd);});
+      setTimeout(upd,300);
+    });
+  }
+  centerEmphasis('.proc-grid');
+  centerEmphasis('.prog-grid');
+})();
+</script>
+
+<script>
+/* Ventana flotante de proyectos */
+(function(){
+  var pm=document.getElementById('pModal');
+  if(!pm) return;
+  window.openProj=function(el){
+    document.getElementById('pModalImg').src=el.getAttribute('data-img')||'';
+    document.getElementById('pModalImg').alt=el.getAttribute('data-title')||'';
+    document.getElementById('pModalCat').textContent=el.getAttribute('data-cat')||'';
+    document.getElementById('pModalTitle').textContent=el.getAttribute('data-title')||'';
+    document.getElementById('pModalDesc').textContent=el.getAttribute('data-desc')||'';
+    pm.classList.add('open');document.body.style.overflow='hidden';
+  };
+  function closeProj(){pm.classList.remove('open');document.body.style.overflow='';}
+  document.getElementById('pModalClose').addEventListener('click',closeProj);
+  pm.addEventListener('click',function(e){if(e.target===pm)closeProj();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeProj();});
+})();
 </script>
 </body>
 </html>
