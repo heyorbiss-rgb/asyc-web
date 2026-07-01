@@ -1,0 +1,80 @@
+backend:
+  name: git-gateway
+  branch: main
+
+locale: es
+media_folder: imagenes/subidas
+public_folder: imagenes/subidas
+
+collections:
+  - name: textos
+    label: "Textos del sitio"
+    files:
+      - name: textos
+        label: "Textos principales"
+        file: content/textos.json
+        fields:
+          - { label: "Título portada (parte 1)", name: hero_titulo_1, widget: string }
+          - { label: "Título portada (parte 2, en verde)", name: hero_titulo_2, widget: string }
+          - { label: "Subtítulo portada", name: hero_sub, widget: text }
+          - { label: "Título del llamado final", name: cta_titulo, widget: string }
+          - { label: "Texto del llamado final", name: cta_texto, widget: text }
+          - { label: "Teléfono 1", name: telefono_1, widget: string }
+          - { label: "Teléfono 2", name: telefono_2, widget: string }
+          - { label: "Dirección", name: direccion, widget: string }
+          - { label: "Región", name: region, widget: string }
+          - { label: "Horario", name: horario, widget: string }
+
+  - name: noticias
+    label: "Noticias"
+    files:
+      - name: noticias
+        label: "Lista de noticias"
+        file: content/noticias.json
+        fields:
+          - label: "Noticias"
+            name: noticias
+            label_singular: "Noticia"
+            widget: list
+            summary: "{{fields.titulo}}"
+            fields:
+              - { label: "Fuente y fecha", name: fuente, widget: string }
+              - { label: "Título", name: titulo, widget: string }
+              - { label: "Resumen", name: resumen, widget: text }
+              - { label: "Link a la nota", name: url, widget: string }
+
+  - name: proyectos
+    label: "Proyectos"
+    files:
+      - name: proyectos
+        label: "Lista de proyectos"
+        file: content/proyectos.json
+        fields:
+          - label: "Proyectos"
+            name: proyectos
+            label_singular: "Proyecto"
+            widget: list
+            summary: "{{fields.titulo}}"
+            fields:
+              - { label: "Categoría", name: categoria, widget: string }
+              - { label: "Título", name: titulo, widget: string }
+              - { label: "Descripción", name: descripcion, widget: text }
+              - { label: "Imagen", name: imagen, widget: image }
+
+  - name: novedades
+    label: "Novedades (día a día)"
+    files:
+      - name: novedades
+        label: "Novedades del día a día"
+        file: content/novedades.json
+        fields:
+          - label: "Novedades"
+            name: novedades
+            label_singular: "Novedad"
+            widget: list
+            summary: "{{fields.titulo}}"
+            fields:
+              - { label: "Fecha (ej: Junio 2026)", name: fecha, widget: string }
+              - { label: "Título", name: titulo, widget: string }
+              - { label: "Texto (cuenta lo que pasó)", name: texto, widget: text }
+              - { label: "Foto", name: imagen, widget: image }
